@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CherryTree HTML</title>
+  <style>
+
+    *{
+      scrollbar-width: none;
+    }
+    body {
+      
+      background-color: #101010;
+      margin: 0;
+      padding: 0;
+      color: #ffffff;
+    }
+    
+    node {
+      color: -webkit-link;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    h1, h2 {
+      display: inline;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    #sidebar {
+    scrollbar-width: none;
+    float: left;
+    position: static;
+    display: inline;
+    width: 10vw;
+    height: auto;
+    background-color: #222;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: -10px 20px 15px 0px rgba(0, 0, 0, 0.492);
+    overflow-x: auto;
+    overflow-y: auto;
+    transition: width 0.5s ease, max-height 2s ease,background-color 0.5s ease;
+    z-index: 1;
+    zoom: 1.5;
+    }
+
+    #sidebar:hover {
+    width: 15vw;
+    background-color: #383838;
+    }
+
+    #nodes {
+      list-style-type: none;
+      padding-left: 10px;
+      margin-top: 5px;
+      margin-bottom: 8px;
+    }
+    
+    #divider {
+      width: 0.1vw;
+      height: 100vh;
+      background-color: #6b6b6b;
+      opacity: 0.5;
+      margin-right: 5px;
+      display: inline;
+      position: absolute;
+    }
+    #content {
+      top: 0;
+      bottom:0;
+      position: absolute;
+      display: inline;
+      padding: 20px;
+      overflow-y: scroll;
+      white-space: pre-wrap;
+      font-size: 1.5em;
+    }
+    #content *{
+        display: inline;
+    }
+    
+    .child-ul {
+      padding-left: 10px;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease;
+      list-style-type: none;
+    }
+    .node {
+      
+      padding: 7px;
+      border-radius: 10px;
+      margin-bottom: 5px;
+      position: relative;
+      border: 2px solid #4e4e4e;
+      white-space: nowrap;
+      overflow: hidden;
+      cursor: default;
+      width: auto;
+    }
+
+    .icon{
+      display: inline-block;
+      vertical-align: top;
+      width: 20px; 
+      height: 20px;
+    }
+
+    @media (max-width: 900px) {
+      #sidebar {
+        zoom: 1.2;
+        height: 2vh;
+        width: 2vw;
+        margin: 5px;
+      }
+      #nodes{
+        display: none;
+      }
+      #sidebar:hover{
+        width: 102vw;
+        height:auto;
+      }
+      #sidebar:hover #nodes {
+      display: block;
+      
+      }
+      #content {
+        zoom: 1;
+      }
+      .child-ul {
+      padding-left: 0px;      
+      }
+      .node{
+        margin-left: 0px;
+      }
+      #nodes{
+        padding-left: 0px;
+      }
+    }
+      
+    
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+  </div>
+
+  <div id="divider"></div>
+  <div id="content">
+  </div>
+</body>
+<script>
+
+ 
+const levels = [1, 2, 3, 3, 2, 3, 3, 3, 4, 5, 2, 3, 3, 4, 2, 3, 2]
+const names = ['Machine', 'Enum', 'Nmap', 'TTL Recon', 'Website', 'login.php', 'index.php', 'upload.php', 'Fuzzing', 'RCE', 'Privesc', 'Database Leak', 'Kernel exploit', 'Crack Hashes', 'Dr williams', 'GhostScript', 'PrivEsc 2']
+const content =['', '\n', "\n<img src=img/2/image-0.png></img>\n\n<h5>Apparently this is a windows machine but it also has ubuntu on ssh. A little confusing.\n\nLet's recon more.</h5>", "\n<img src=img/3/image-0.png></img>\n<img src=img/3/image-1.png></img>\n\n<h5>According to TTL(Time to Live) now we know it is a windows machine because on linux TTL is set 64 by default  as opposed to 127 on windows.\n\nBut how ssh service runs on ubuntu.</h5>\n\n<img src=img/3/image-2.png></img>\n\n\n<h5 style='color: #ececec'>When we connect SSH on port 22 and listen with tcpdump, the machine sends us packets with a TTL (Time to Live) of 62</h5><h5>. \n\nThis </h5><h5 style='color: #ececec'>means the packet goes through 2 hops, passing through Windows HyperV and a VPN connection to HTB.</h5>\n\n", "<img src=img/4/image-0.png></img>\n\n<h4>let's look at php pages</h4>", '<img src=img/5/image-0.png></img>\n\n\nNothing interesting.\n\nBut we can create our own account.', '<img src=img/6/image-0.png></img>\n\n\nWe have an upload segment and nothing else', "<img src=img/7/image-0.png></img><h5>\n\nWe can only upload image files like .png or .jpg extensions. And files stores in /uploads/filename.extension directory.\n\nLet's try to manipulate.\n\n</h5><img src=img/7/image-1.png></img><h5>\n\nadding file name .php extension redirects to /failed.php\n\n</h5><img src=img/7/image-2.png></img><h5>\n\nWhen we add  url encoded string %0a which represents \\n returns success but unfortunately \n\n</h5><img src=img/7/image-3.png></img><h5>\n\n</h5><h3>404 :-(</h3>\n\n", "Lte's fuzz to find out which extensions are allowed\n\n<img src=img/8/image-0.png></img>\n\nfilter matching regular expressions with success keyword.\n\n\n<img src=img/8/image-1.png></img>\n\nThere are quite a lot extensions but none of them have worked.\n\nLet's try phar to get code execution.", "\n<img src=img/9/image-0.png></img><h4>\n\njust simple code execution test.\n\n</h4><img src=img/9/image-1.png></img><h4>\n\nand apparently it works.\n\n</h4><img src=img/9/image-2.png></img><h4>\n\nHere we have phpinfo page\n\n</h4><img src=img/9/image-3.png></img><h4>\n\n\n We can't have shell easily\n \n </h4><img src=img/9/image-4.png></img><h4>\n \n</h4><h4 style='color: #ececec'>I have found a PHP code on GitHub that checks all possible functions to create a reverse shell</h4><h4>. Let's test it quickly.\n\n</h4><img src=img/9/image-5.png></img><h4>\n\n\nHere our awosme looking reverse shell.\n\n\n\n</h4><img src=img/9/image-6.png></img><h4>\n\nthat's better.\n\n</h4>", '<img src=img/10/image-0.png></img>\n\n<h3>Grep hardcoded credantials on www/</h3>\n\n<img src=img/10/image-1.png></img>\n\n\n<img src=img/10/image-2.png></img><h3>\n\nDo you remember our directory enumuration?\n\n</h3><img src=img/10/image-3.png></img><h3>\n\nIt is still useful.\n</h3>', "<img src=img/11/image-0.png></img><h4>\n\nSeems like server using mysql.\n\n\n</h4><img src=img/11/image-1.png></img><h4>\n\nWe can login database with credantials\n\n</h4><img src=img/11/image-2.png></img><h4>\n\nWe can dump the database and crack hashes of users.\n\n</h4><img src=img/11/image-3.png></img><h4>\n\n... SNIP ...\n\n</h4><img src=img/11/image-4.png></img>\n\nWe cracked the admin password, but it didn't help us escape the sandbox.", '\n<h4>Linux webserver </h4>scale="h4" background="#17e417e417e4" foreground="#eded33333b3b" weight="heavy">5.19.0-35-generic<h4> #36-Ubuntu SMP PREEMPT_DYNAMIC Fri Feb 3 18:36:56 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux</h4>\n\n<img src=img/12/image-0.png></img>\n\n\n\n', "<img src=img/13/image-0.png></img>\n\n\n<img src=img/13/image-1.png></img>\n\ndrwilliams:$6$uWBSeTcoXXTBRkiL$S9ipksJfiZuO4bFI6I9w/iItu5.Ohoz3dABeF6QWumGBspUW378P1tlwak7NqzouoRTbrz6Ag0qcyGQxW192y/:<span style='color: #57e389'>qwe123!@#</span>", "<h4>We can try login https website on port 443 or login to AD.\n\n</h4><img src=img/14/image-0.png></img><h4>\n\nNothing interesting in smb shares and can't login winrm\n\n\n</h4><img src=img/14/image-1.png></img><h4>\n\n\nLet's try website login\n</h4>\n\n<img src=img/14/image-2.png></img>\n\nWe have an email from Dr Williams boss and he wants an .eps file.\n\nLet's search for what can we do with GhostScript.", '<img src=img/15/image-0.png></img>\n\nWe can create a reverse shell via .eps file.\n\n\n<img src=img/15/image-1.png></img>\n\nBut unfortunatelly the reverse shell was created for linux machines but ours is windows as you know.\n\n<img src=img/15/image-2.png></img>\n\nCopy nishang powershell reverse tcp aslo edit ip and port\n\n\n<img src=img/15/image-3.png></img>\n\ncreate a powershell command to download reverse shell file.\n\n<img src=img/15/image-4.png></img>\n\nAnd attach the payload the <a href="https://github.com/jakabakos/CVE-2023-36664-Ghostscript-command-injection">GhostScript RCE</a> .\n\n<img src=img/15/image-5.png></img>\n\nAnd here we go.\n', 'We know running apache service on windows so\n\n<img src=img/16/image-0.png></img>\n\nwe can go htdocs directory.\n\nAnd test code executaion. But unfortunately it fails. \n\n<img src=img/16/image-1.png></img>\n\nWhen we recon about why it fails that reveals UTF-16LE style="italic">(which windows like) encoding brokes the php.  ']
+function generateHTML(levels, names) {
+    let html = '<ul id="nodes">';
+    let currentLevel = 1;
+
+    for (let i = 0; i < levels.length; i++) {
+        const level = levels[i];
+        const name = names[i];
+        const backgroundColor = `rgb(${51 + 17 * (level - 1)}, ${51 + 17 * (level - 1)}, ${51 + 17 * (level - 1)})`;
+
+        while (currentLevel < level) {
+            html += '<ul class="child-ul">';
+            currentLevel++;
+        }
+        while (currentLevel > level) {
+            html += '</ul>';
+            currentLevel--;
+        }
+        html += `<li class="node" style="background-color: ${backgroundColor};"><div class="icon">+</div><span>${name}</span>`;
+        if (i + 1 < levels.length && levels[i + 1] === level) {
+            html += '</li>';
+        }
+    }
+
+    while (currentLevel > 1) {
+        html += '</ul>';
+        currentLevel--;
+    }
+
+    html += '</div>';
+    return html;
+}
+
+const generatedHTML = generateHTML(levels, names);
+document.getElementById('sidebar').innerHTML = generatedHTML;
+
+
+var nodes = document.querySelectorAll(".node");
+
+Array.from(nodes).forEach((node, index) => {
+  addListener(node, index);
+});
+
+function addListener(node, id){
+  node.addEventListener("click", e => {
+    e.stopPropagation();
+    showContent(id);
+    render_links();
+  });
+}
+
+
+function render_links(){
+  var node_links = document.querySelectorAll("node");
+  Array.from(node_links).forEach(link => {
+    link.addEventListener("click", e => {
+          
+          var id = link.getAttribute("data-id"); 
+          showContent(id-1);
+      });
+  });
+}
+
+function showContent(id){
+
+  document.getElementById('content').innerHTML = content[id];
+
+}
+showContent(0);
+
+
+var icons = document.querySelectorAll(".icon");
+
+Array.from(icons).forEach(icon => {
+    icon.addEventListener("click",e =>{
+
+      e.stopPropagation();
+
+      toggleExpand(icon.parentNode)
+      toggleIcon(icon);
+    }
+  )
+}
+);
+
+function toggleIcon(icon) {
+  icon.textContent = icon.textContent === "+" ? "-" : "+";
+}
+
+
+function toggleExpand(node){
+
+    let childUl = node.querySelector(".child-ul")
+    
+    
+    if(childUl){
+
+      childUl.classList.toggle("expanded");
+      expand_collapse(childUl);
+
+
+    }
+    
+};
+
+function expand_collapse(childUl){
+
+
+  let parents = [];
+  let element = childUl;
+  while (element.id !== 'nodes') {
+    
+    if (element.classList.contains('child-ul')){
+      parents.push(element);
+    }
+    element = element.parentElement;
+  }
+
+  if(childUl.classList.contains("expanded")){
+  
+  
+  
+
+  let heightUl = 0;
+  parents.forEach(parentUl => {
+
+    heightUl += parentUl.scrollHeight;
+
+    parentUl.style.maxHeight = heightUl + "px";
+
+
+  })
+  
+  }
+  else{
+
+  let heightUl = parents[0].scrollHeight;
+  parents.forEach(parentUl => {
+
+    parentUl.style.maxHeight = (parentUl.scrollHeight-heightUl) + "px";
+
+  })
+  }
+}
+
+
+  </script>
+</body>
+
+</html>

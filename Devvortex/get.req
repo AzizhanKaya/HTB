@@ -1,0 +1,3 @@
+GET /FUZZ HTTP/1.1
+Host: devvortex.htb
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8

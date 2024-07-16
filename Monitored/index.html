@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CherryTree HTML</title>
+  <style>
+
+    *{
+      scrollbar-width: none;
+    }
+    body {
+      
+      background-color: #101010;
+      margin: 0;
+      padding: 0;
+      color: #ffffff;
+    }
+    
+    node {
+      color: -webkit-link;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    h1, h2 {
+      display: inline;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    #sidebar {
+    scrollbar-width: none;
+    float: left;
+    position: static;
+    display: inline;
+    width: 10vw;
+    height: auto;
+    background-color: #222;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: -10px 20px 15px 0px rgba(0, 0, 0, 0.492);
+    overflow-x: auto;
+    overflow-y: auto;
+    transition: width 0.5s ease, max-height 2s ease,background-color 0.5s ease;
+    z-index: 1;
+    zoom: 1.5;
+    }
+
+    #sidebar:hover {
+    width: 15vw;
+    background-color: #383838;
+    }
+
+    #nodes {
+      list-style-type: none;
+      padding-left: 10px;
+      margin-top: 5px;
+      margin-bottom: 8px;
+    }
+    
+    #divider {
+      width: 0.1vw;
+      height: 100vh;
+      background-color: #6b6b6b;
+      opacity: 0.5;
+      margin-right: 5px;
+      display: inline;
+      position: absolute;
+    }
+    #content {
+      top: 0;
+      bottom:0;
+      position: absolute;
+      display: inline;
+      padding: 20px;
+      overflow-y: scroll;
+      white-space: pre-wrap;
+      font-size: 1.5em;
+    }
+    
+    .child-ul {
+      padding-left: 10px;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease;
+      list-style-type: none;
+    }
+    .node {
+      
+      padding: 7px;
+      border-radius: 10px;
+      margin-bottom: 5px;
+      position: relative;
+      border: 2px solid #4e4e4e;
+      white-space: nowrap;
+      overflow: hidden;
+      cursor: default;
+      width: auto;
+    }
+
+    .icon{
+      display: inline-block;
+      vertical-align: top;
+      width: 20px; 
+      height: 20px;
+    }
+
+    @media (max-width: 900px) {
+      #sidebar {
+        zoom: 1.2;
+        height: 2vh;
+        width: 2vw;
+        margin: 5px;
+      }
+      #nodes{
+        display: none;
+      }
+      #sidebar:hover{
+        width: 102vw;
+        height:auto;
+      }
+      #sidebar:hover #nodes {
+      display: block;
+      
+      }
+      #content {
+        zoom: 1;
+      }
+      .child-ul {
+      padding-left: 0px;      
+      }
+      .node{
+        margin-left: 0px;
+      }
+      #nodes{
+        padding-left: 0px;
+      }
+    }
+      
+    
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+  </div>
+
+  <div id="divider"></div>
+  <div id="content">
+  </div>
+</body>
+<script>
+
+ 
+const levels = [1, 2, 3, 2, 3, 2, 3, 3, 4, 2];
+const names = ['Machine', 'Enumeration', 'Website', 'SNMP', 'Login nagios', 'Nagios enum', 'SQL Injection', 'Create Admin Account', 'Reverse Shell', 'Privilege Escalation'];
+const content =["<img src=img/0/image-0.png></img>\n\n\t\t\t\t  <img src=img/0/image-1.png></img>  \n\n<h1>Name: </h1><h1 style='color: #3584e4'>Monitored</h1><h1>\nIp: </h1><h1 style='color: #ed333b'>10.10.11.248</h1><h1>\nDifficulty: </h1><h1 style='color: #ffa348'>Medium</h1>\nPrepared by: Azizhan Kaya\n", "<h2>#Nmap</h2>\n\n<b style='color: #54ff54'>➜ \xa0</b><b style='color: #54ffff'>Monitored</b> sudo nmap -p- -T4 -oN all-ports.nmap 10.10.11.248\n <img src=img/1/image-0.png></img>\n <b style='color: #54ff54'>➜ \xa0</b><b style='color: #54ffff'>Monitored</b> sudo nmap -p 22,80,389,443,5667 -sC -sV -oN monitored.nmap 10.10.11.248\n<img src=img/1/image-1.png></img>\n\nLooking at the results, we have a few ports are open. On 80 and 443 we have nagios webApp running and also have ldap.\n\nLet's first look at the <node data-id=3>website.</node>\n\n\n## Nmap Udp Scan\n\n<b style='color: #54ff54'>➜ \xa0</b><b style='color: #54ffff'>Monitored</b> <span style='color: #18b218'>sudo</span> <span style='color: #18b218'>nmap</span> -p <span style='color: #b26818'>'161,162'</span> -sU -sC -sV -oN udp.nmap 10.10.11.248\n\n<img src=img/1/image-2.png></img>\n\nNow we confirm we can use <node data-id=4>snmp.</node>", '<img src=img/2/image-0.png></img>\n\nJust a login page nothing else.\n\nBut now we know the type of nagios it is nagios XI.\n\nAnd doing some research about nagios ports and protocols i found a document.\n\n<img src=img/2/image-1.png></img>\n\nNow it make sense why machine named as monitoring :).\n\nNow we can return back and do an SNMP nmap port scan on UDP. ', "We can enumurate all running procceses and more on the box with <span style='color: #18b218'>snmpbulkwalk</span> tool.\n\n<b style='color: #54ff54'>➜ \xa0</b><b style='color: #54ffff'>Monitored</b> <span style='color: #18b218'>snmpbulkwalk</span> -v2c -c public 10.10.11.248 -m all <span style='color: #b26818'>&gt;</span> snmp.out\n\n<b style='color: #54ff54'>➜ \xa0</b><b style='color: #54ffff'>Monitored</b> <span style='color: #18b218'>grep</span> <span style='color: #b26818'>'SWRunName'</span> snmp.out | <span style='color: #18b218'>tail</span>\n\n<img src=img/3/image-0.png></img>\n\nRunning process names with PID's.\n\n\nAfter some recon finally found a valuable info\n\n<b style='color: #54ff54'>➜ \xa0</b><b style='color: #54ffff'>Monitored</b> <span style='color: #18b218'>grep</span> <span style='color: #b26818'>'SWRun'</span> snmp.out | <span style='color: #18b218'>grep</span> 1434\n<img src=img/3/image-1.png></img>\n\nsvc:XjH7VCehowpR1xZB\n \nThis might be credantials to login.\n", '<img src=img/4/image-0.png></img>\n\nThat is not what we see when we login with wrong credantials.\n\n<img src=img/4/image-1.png></img>\n\nSo we know credantials are true but hope that there is a way around to login.\n\n<img src=img/4/image-2.png></img>\n\nI see this exploit on <a href="https://www.exploit-db.com/exploits/51925">exploit-db</a> and code giving us info about getting token and login with the token.\n\nOn burpsuite i replicate the request.\n\n<img src=img/4/image-3.png></img>\n\nresponse:\n\n<img src=img/4/image-4.png></img>\n\nThen bypass login with token', '<img src=img/5/image-0.png></img>\n\nsome running services nothing interesting.\n\n<img src=img/5/image-1.png></img>\n\nThe version of nagios leaked on dashboard.\n\nSo we can use <node data-id=7>sql injection</node>', "<img src=img/6/image-0.png></img>\n\nThe id parameter seems like vulnarable.\n\n\n<img src=img/6/image-1.png></img>\n\nTry simple sql injection test. Don't forget the cookie :).\n\n<img src=img/6/image-2.png></img> \n\nLet's go to sqlmap because it is error based sql and it is pain to do with manually\n\n\n<img src=img/6/image-3.png></img>\n\nalso you can add --technique=E to specify error-based attack. It makes things to go quicker.\n\n<img src=img/6/image-4.png></img>\n\nWe can dump API key and create our admin account or crack admin's hash.\n\nFirst one is more faster and reliable <node data-id=8>so.</node>\n\n\n\n\n", "<img src=img/7/image-0.png></img>\n\nWe can create our own admin account with API key. Set 'auth_level' paramter to admin and send it.\n\n<img src=img/7/image-1.png></img>\n\n", "<img src=img/8/image-0.png></img>\n\n\n<img src=img/8/image-1.png></img>\n\n<b style='color: #ff5454'>➜ \xa0</b><b style='color: #54ffff'>Monitored</b> <span style='color: #18b218'>nc</span> -lvnp 9001\n\nListen and run the command\n\n<img src=img/8/image-2.png></img>", '\nLet\'s see what sudo says\n\n<img src=img/9/image-0.png></img>\n\nA lot\'s of files.\n\nLet\'s choose /usr/local/nagiosxi/scripts/components/getprofile.sh because it is a shell script and no need to reverse engineering.\n\n<img src=img/9/image-1.png></img>\n\nCode basically writes some files in tmp folder and zip them up.\n\nBut there is a misconfiguration that cause <a href="https://systemweakness.com/arbitrary-file-read-via-symbolic-links-f794e6fd2c2b">Arbitrary file read</a>.\n\n<img src=img/9/image-2.png></img>\n\nnagios user is owner of the file so we can easily add a symlink to root id_rsa file.\n\n<img src=img/9/image-3.png></img>\n\nLooks great.\n\n<img src=img/9/image-4.png></img>\n\nMaybe I should have blurred it.\n\nBut anyways... \n\n<img src=img/9/image-5.png></img>\n\nHere is the flag!!']
+function generateHTML(levels, names) {
+    let html = '<ul id="nodes">';
+    let currentLevel = 1;
+
+    for (let i = 0; i < levels.length; i++) {
+        const level = levels[i];
+        const name = names[i];
+        const backgroundColor = `rgb(${51 + 17 * (level - 1)}, ${51 + 17 * (level - 1)}, ${51 + 17 * (level - 1)})`;
+
+        while (currentLevel < level) {
+            html += '<ul class="child-ul">';
+            currentLevel++;
+        }
+        while (currentLevel > level) {
+            html += '</ul>';
+            currentLevel--;
+        }
+        html += `<li class="node" style="background-color: ${backgroundColor};"><div class="icon">+</div><span>${name}</span>`;
+        if (i + 1 < levels.length && levels[i + 1] === level) {
+            html += '</li>';
+        }
+    }
+
+    while (currentLevel > 1) {
+        html += '</ul>';
+        currentLevel--;
+    }
+
+    html += '</div>';
+    return html;
+}
+
+const generatedHTML = generateHTML(levels, names);
+document.getElementById('sidebar').innerHTML = generatedHTML;
+
+
+var nodes = document.querySelectorAll(".node");
+
+Array.from(nodes).forEach((node, index) => {
+  addListener(node, index);
+});
+
+function addListener(node, id){
+  node.addEventListener("click", e => {
+    e.stopPropagation();
+    showContent(id);
+    render_links();
+  });
+}
+
+
+function render_links(){
+  var node_links = document.querySelectorAll("node");
+  Array.from(node_links).forEach(link => {
+    link.addEventListener("click", e => {
+          
+          var id = link.getAttribute("data-id"); 
+          showContent(id-1);
+      });
+  });
+}
+
+function showContent(id){
+
+  document.getElementById('content').innerHTML = content[id];
+
+}
+showContent(0);
+
+
+var icons = document.querySelectorAll(".icon");
+
+Array.from(icons).forEach(icon => {
+    icon.addEventListener("click",e =>{
+
+      e.stopPropagation();
+
+      toggleExpand(icon.parentNode)
+      toggleIcon(icon);
+    }
+  )
+}
+);
+
+function toggleIcon(icon) {
+  icon.textContent = icon.textContent === "+" ? "-" : "+";
+}
+
+
+function toggleExpand(node){
+
+    let childUl = node.querySelector(".child-ul")
+    
+    
+    if(childUl){
+
+      childUl.classList.toggle("expanded");
+      expand_collapse(childUl);
+
+
+    }
+    
+};
+
+function expand_collapse(childUl){
+
+
+  let parents = [];
+  let element = childUl;
+  while (element.id !== 'nodes') {
+    
+    if (element.classList.contains('child-ul')){
+      parents.push(element);
+    }
+    element = element.parentElement;
+  }
+
+  if(childUl.classList.contains("expanded")){
+  
+  
+  
+
+  let heightUl = 0;
+  parents.forEach(parentUl => {
+
+    heightUl += parentUl.scrollHeight;
+
+    parentUl.style.maxHeight = heightUl + "px";
+
+
+  })
+  
+  }
+  else{
+
+  let heightUl = parents[0].scrollHeight;
+  parents.forEach(parentUl => {
+
+    parentUl.style.maxHeight = (parentUl.scrollHeight-heightUl) + "px";
+
+  })
+  }
+}
+
+
+  </script>
+</body>
+
+</html>

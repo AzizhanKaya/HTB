@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CherryTree HTML</title>
+  <style>
+
+    *{
+      scrollbar-width: none;
+    }
+    body {
+      
+      background-color: #101010;
+      margin: 0;
+      padding: 0;
+      color: #ffffff;
+    }
+    
+    node {
+      color: -webkit-link;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    h1, h2 {
+      display: inline;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    #sidebar {
+    scrollbar-width: none;
+    float: left;
+    position: static;
+    display: inline;
+    width: 10vw;
+    height: auto;
+    background-color: #222;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: -10px 20px 15px 0px rgba(0, 0, 0, 0.492);
+    overflow-x: auto;
+    overflow-y: auto;
+    transition: width 0.5s ease, max-height 2s ease,background-color 0.5s ease;
+    z-index: 1;
+    zoom: 1.5;
+    }
+
+    #sidebar:hover {
+    width: 15vw;
+    background-color: #383838;
+    }
+
+    #nodes {
+      list-style-type: none;
+      padding-left: 10px;
+      margin-top: 5px;
+      margin-bottom: 8px;
+    }
+    
+    #divider {
+      width: 0.1vw;
+      height: 100vh;
+      background-color: #6b6b6b;
+      opacity: 0.5;
+      margin-right: 5px;
+      display: inline;
+      position: absolute;
+    }
+    #content {
+      top: 0;
+      bottom:0;
+      position: absolute;
+      display: inline;
+      padding: 20px;
+      overflow-y: scroll;
+      white-space: pre-wrap;
+      font-size: 1.5em;
+    }
+    #content *{
+        display: inline;
+    }
+    
+    .child-ul {
+      padding-left: 10px;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease;
+      list-style-type: none;
+    }
+    .node {
+      
+      padding: 7px;
+      border-radius: 10px;
+      margin-bottom: 5px;
+      position: relative;
+      border: 2px solid #4e4e4e;
+      white-space: nowrap;
+      overflow: hidden;
+      cursor: default;
+      width: auto;
+    }
+
+    .icon{
+      display: inline-block;
+      vertical-align: top;
+      width: 20px; 
+      height: 20px;
+    }
+
+    @media (max-width: 900px) {
+      #sidebar {
+        zoom: 1.2;
+        height: 2vh;
+        width: 2vw;
+        margin: 5px;
+      }
+      #nodes{
+        display: none;
+      }
+      #sidebar:hover{
+        width: 102vw;
+        height:auto;
+      }
+      #sidebar:hover #nodes {
+      display: block;
+      
+      }
+      #content {
+        zoom: 1;
+      }
+      .child-ul {
+      padding-left: 0px;      
+      }
+      .node{
+        margin-left: 0px;
+      }
+      #nodes{
+        padding-left: 0px;
+      }
+    }
+      
+    
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+  </div>
+
+  <div id="divider"></div>
+  <div id="content">
+  </div>
+</body>
+<script>
+
+ 
+const levels = [1, 2, 2, 3, 3, 4, 2]
+const names = ['Machine', 'Enumuration', 'Web Application', 'LFI', 'File Upload', 'RCE', 'Privesc']
+const content =["<img src=img/0/image-0.png></img>\n\n    \t\t\t\t\t\t\t\t\t\t\t         <img src=img/0/image-1.png></img>\n\n<h1>\tName: </h1><h1 style='color: #f6d32d'>Zipping</h1><h1>\n\tIp:  </h1><h1 style='color: #3584e4'>10.10.11.229</h1><h1>\n\tDifficulty: </h1><h1 style='color: #ffa348'>Medium</h1>\n\tPrepared by: Azizhan Kaya\n", 'We can enumerate open ports of the system with nmap\n<img src=img/1/image-0.png></img>\n\n<img src=img/1/image-1.png></img>\n\nlooking at the results we have just 2 ports are open.\nFirst one being ssh on port 22\nSecond one being http server on port 80\nSo we know we are dealing with an webApp.\n\nscan version of protocols which open with nmap\n<img src=img/1/image-2.png></img>\n\nresults:\n<img src=img/1/image-3.png></img>\n', '<img src=img/2/image-0.png></img>\n\n\n<h4>This</h4> is what webpage looks like\n\nDiscovering directorys with ZAP\n\n<img src=img/2/image-1.png></img>\nwe have an zip file upload directory\nalso shop page\n\n<img src=img/2/image-2.png></img>\nUpload page\n<img src=img/2/image-3.png></img>\nShop page', '<img src=img/3/image-0.png></img>\nTesting', 'web site only allows pdf files which zipped to upload.\n\n<img src=img/4/image-0.png></img>\n\nSo lets test to upload and capture to request with BurpSuite.\n\n<img src=img/4/image-1.png></img>\n\nThen send to the repeater tab. Also forward the request and look at the result at web page.\n\n<img src=img/4/image-2.png></img>\n\nIt is uploading in a random named directory with pdf extension.\nSo we have to find a way to RCE via uploding insecure files.\nFirst idea is get rid of the .pdf extension.\n\n<img src=img/4/image-3.png></img>\n\nlets change extension with burp to .php\n\n<img src=img/4/image-4.png></img>\n\nresponse:\n\n<img src=img/4/image-5.png></img>\n\nWe cant pass the firewall :(\n\n\n<img src=img/4/image-6.png></img>\n\nCopy php reverse shell and edit our ip and listening port\n\n<img src=img/4/image-7.png></img>\n\nLets zip php reverse shell file\n\n<img src=img/4/image-8.png></img>\n\nand rename .zip to .pdf\n\n<img src=img/4/image-9.png></img>\n\nand zip again with .pdf\n\n<img src=img/4/image-10.png></img>\n\n<img src=img/4/image-11.png></img>\n\nReverse shell uploaded successfully.', "It's time to use LFI.\nthis phar is a php wrapper.\nLets send our payload to run our php reverse shell.\n\n<img src=img/5/image-0.png></img>\n\nDon't forget the listen :)\n\n<img src=img/5/image-1.png></img>\n\nFinally, we have our shell.\n", "As usual\n\n<img src=img/6/image-0.png></img>\n\nlet's see what sudo tells us\n\n<img src=img/6/image-1.png></img>\n\nwe can do sudo stock without password.\n\n<img src=img/6/image-2.png></img>\n\nOhh.. Always think twice.\n\n<img src=img/6/image-3.png></img>\n\nGood news, we have permisson to read.\n\n<img src=img/6/image-4.png></img>\n\nLet's grep the pass\n\n<img src=img/6/image-5.png></img>\n\nThere you are.\n\n<img src=img/6/image-6.png></img>\n\nBut program doesn't give much.\n\nSo lets dive deeper and do some reverse engineering\n\n<img src=img/6/image-7.png></img>\n\nuse strace \n\n<img src=img/6/image-8.png></img>\n\n*No such file or directory*\nIt happens when program tries to include a library but couldn't\nSo we can add our payload to execute with program so we can get root. \n\n<img src=img/6/image-9.png></img>\n\nusing msfvenom to create our payload\n\n<img src=img/6/image-10.png></img>\n\nstart a web sevrer to upload the payload file.\n\n<img src=img/6/image-11.png></img>\n\nalso download in .config directory.\n\nnow listen..\nand execute the program with sudo \n\n<img src=img/6/image-12.png></img>\n\nWe are root!\n\n<img src=img/6/image-13.png></img>\n\nAnd here is the flag!!"]
+function generateHTML(levels, names) {
+    let html = '<ul id="nodes">';
+    let currentLevel = 1;
+
+    for (let i = 0; i < levels.length; i++) {
+        const level = levels[i];
+        const name = names[i];
+        const backgroundColor = `rgb(${51 + 17 * (level - 1)}, ${51 + 17 * (level - 1)}, ${51 + 17 * (level - 1)})`;
+
+        while (currentLevel < level) {
+            html += '<ul class="child-ul">';
+            currentLevel++;
+        }
+        while (currentLevel > level) {
+            html += '</ul>';
+            currentLevel--;
+        }
+        html += `<li class="node" style="background-color: ${backgroundColor};"><div class="icon">+</div><span>${name}</span>`;
+        if (i + 1 < levels.length && levels[i + 1] === level) {
+            html += '</li>';
+        }
+    }
+
+    while (currentLevel > 1) {
+        html += '</ul>';
+        currentLevel--;
+    }
+
+    html += '</div>';
+    return html;
+}
+
+const generatedHTML = generateHTML(levels, names);
+document.getElementById('sidebar').innerHTML = generatedHTML;
+
+
+var nodes = document.querySelectorAll(".node");
+
+Array.from(nodes).forEach((node, index) => {
+  addListener(node, index);
+});
+
+function addListener(node, id){
+  node.addEventListener("click", e => {
+    e.stopPropagation();
+    showContent(id);
+    render_links();
+  });
+}
+
+
+function render_links(){
+  var node_links = document.querySelectorAll("node");
+  Array.from(node_links).forEach(link => {
+    link.addEventListener("click", e => {
+          
+          var id = link.getAttribute("data-id"); 
+          showContent(id-1);
+      });
+  });
+}
+
+function showContent(id){
+
+  document.getElementById('content').innerHTML = content[id];
+
+}
+showContent(0);
+
+
+var icons = document.querySelectorAll(".icon");
+
+Array.from(icons).forEach(icon => {
+    icon.addEventListener("click",e =>{
+
+      e.stopPropagation();
+
+      toggleExpand(icon.parentNode)
+      toggleIcon(icon);
+    }
+  )
+}
+);
+
+function toggleIcon(icon) {
+  icon.textContent = icon.textContent === "+" ? "-" : "+";
+}
+
+
+function toggleExpand(node){
+
+    let childUl = node.querySelector(".child-ul")
+    
+    
+    if(childUl){
+
+      childUl.classList.toggle("expanded");
+      expand_collapse(childUl);
+
+
+    }
+    
+};
+
+function expand_collapse(childUl){
+
+
+  let parents = [];
+  let element = childUl;
+  while (element.id !== 'nodes') {
+    
+    if (element.classList.contains('child-ul')){
+      parents.push(element);
+    }
+    element = element.parentElement;
+  }
+
+  if(childUl.classList.contains("expanded")){
+  
+  
+  
+
+  let heightUl = 0;
+  parents.forEach(parentUl => {
+
+    heightUl += parentUl.scrollHeight;
+
+    parentUl.style.maxHeight = heightUl + "px";
+
+
+  })
+  
+  }
+  else{
+
+  let heightUl = parents[0].scrollHeight;
+  parents.forEach(parentUl => {
+
+    parentUl.style.maxHeight = (parentUl.scrollHeight-heightUl) + "px";
+
+  })
+  }
+}
+
+
+  </script>
+</body>
+
+</html>

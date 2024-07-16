@@ -1,0 +1,49 @@
+{
+    "machines": [
+        {
+            "name": "Zipping",
+            "difficulty": "Medium",
+            "img": "https://labs.hackthebox.com/storage/avatars/03e875ef2a39c9a2bd7538b3cfcd9b8a.png",
+            "os": "linux",
+            "rate": "4.1",
+            "skills": ["File Upload", "LFI","Reverse Engineering"],
+            "cves": []
+        },
+        {   
+            "name": "Monitored",
+            "difficulty": "Medium",
+            "img": "https://labs.hackthebox.com/storage/avatars/d4988810825d26acb2e84ca0ac9feaf4.png",
+            "os": "linux",
+            "rate": "4.3",
+            "skills": ["SNMP enum", "SQL injection","Arbitrary file read"],
+            "cves": ["CVE-2023-40931"]
+        },
+        {
+            "name": "Hospital",
+            "difficulty": "Medium",
+            "img": "https://labs.hackthebox.com/storage/avatars/e980d18b909fa0ba8f519cf9777fd413.png",
+            "os": "windows",
+            "rate": "4.6",
+            "skills": ["File Upload", "webApp", "Social Engineering"],
+            "cves": ["CVE-2023-35001","CVE-2023-36664"]
+        },
+        {
+            "name": "Broker",
+            "difficulty": "Easy",
+            "img": "https://labs.hackthebox.com/storage/avatars/a725533911ba94a880899fbf900d988c.png",
+            "os": "linux",
+            "rate": "4.3",
+            "skills": ["Network Enumeration", "Vulnerability Assessment","Nginx Misconf"],
+            "cves": ["CVE-2023-46606"]
+        },
+        {   
+            "name": "Freelancer",
+            "difficulty": "Hard",
+            "img": "https://labs.hackthebox.com/storage/avatars/cc3c525e7837e7e95d0da9b6596e7a30.png",
+            "os": "windows",
+            "rate": "4.3",
+            "skills": ["SQL", "webApp"],
+            "cves": ["CVE-2024-33333"]
+        }
+    ]
+}

