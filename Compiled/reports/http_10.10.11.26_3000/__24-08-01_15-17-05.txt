@@ -1,0 +1,66 @@
+# Dirsearch started Thu Aug  1 15:17:49 2024 as: /usr/lib/python3/dist-packages/dirsearch/dirsearch.py -u http://10.10.11.26:3000/
+
+404     2KB  http://10.10.11.26:3000/.keys
+404     2KB  http://10.10.11.26:3000/.png
+404     0B   http://10.10.11.26:3000/.well-known/acme-challenge/dtfy
+404     0B   http://10.10.11.26:3000/.well-known/apple-app-site-association
+404     0B   http://10.10.11.26:3000/.well-known/acme-challenge
+404     0B   http://10.10.11.26:3000/.well-known/ashrae
+404     0B   http://10.10.11.26:3000/.well-known/apple-developer-merchant-domain-association
+404     0B   http://10.10.11.26:3000/.well-known/assetlinks.json
+404     0B   http://10.10.11.26:3000/.well-known/browserid
+404     0B   http://10.10.11.26:3000/.well-known/caldav
+404     0B   http://10.10.11.26:3000/.well-known/carddav
+404     0B   http://10.10.11.26:3000/.well-known/csvm
+404     0B   http://10.10.11.26:3000/.well-known/core
+404     0B   http://10.10.11.26:3000/.well-known/dnt
+404     0B   http://10.10.11.26:3000/.well-known/dnt-policy.txt
+404     0B   http://10.10.11.26:3000/.well-known/hoba
+404     0B   http://10.10.11.26:3000/.well-known/genid
+404     0B   http://10.10.11.26:3000/.well-known/est
+404     0B   http://10.10.11.26:3000/.well-known/jwks
+404     0B   http://10.10.11.26:3000/.well-known/host-meta
+404     0B   http://10.10.11.26:3000/.well-known/keybase.txt
+404     0B   http://10.10.11.26:3000/.well-known/ni
+404     0B   http://10.10.11.26:3000/.well-known/host-meta.json
+404     0B   http://10.10.11.26:3000/.well-known/jwks.json
+404     0B   http://10.10.11.26:3000/.well-known/openorg
+404     0B   http://10.10.11.26:3000/.well-known/stun-key
+404     0B   http://10.10.11.26:3000/.well-known/reload-config
+200     1KB  http://10.10.11.26:3000/.well-known/openid-configuration
+404    10B   http://10.10.11.26:3000/.well-known/webfinger
+404     0B   http://10.10.11.26:3000/.well-known/repute-template
+404     0B   http://10.10.11.26:3000/.well-known/timezone
+404     0B   http://10.10.11.26:3000/.well-known/posh
+404     0B   http://10.10.11.26:3000/.well-known/void
+404     0B   http://10.10.11.26:3000/.well-known/time
+200   206B   http://10.10.11.26:3000/.well-known/security.txt
+303    38B   http://10.10.11.26:3000/admin    -> REDIRECTS TO: /user/login
+303    38B   http://10.10.11.26:3000/admin/    -> REDIRECTS TO: /user/login
+404     2KB  http://10.10.11.26:3000/admin_my_avatar.png
+200    16KB  http://10.10.11.26:3000/administrator/
+200    16KB  http://10.10.11.26:3000/administrator
+404    19B   http://10.10.11.26:3000/api/v1/
+200   704B   http://10.10.11.26:3000/api/swagger
+404    19B   http://10.10.11.26:3000/api/v1/swagger.json
+404    19B   http://10.10.11.26:3000/api/v1/swagger.yaml
+404    19B   http://10.10.11.26:3000/api/v1
+404     0B   http://10.10.11.26:3000/assets/file
+404     0B   http://10.10.11.26:3000/assets/fckeditor
+404     0B   http://10.10.11.26:3000/assets/pubspec.yaml
+404     0B   http://10.10.11.26:3000/assets/js/fckeditor
+404     0B   http://10.10.11.26:3000/assets/npm-debug.log
+303    41B   http://10.10.11.26:3000/explore    -> REDIRECTS TO: /explore/repos
+301    58B   http://10.10.11.26:3000/favicon.ico    -> REDIRECTS TO: /assets/img/favicon.png
+200    29KB  http://10.10.11.26:3000/explore/repos
+303    38B   http://10.10.11.26:3000/issues    -> REDIRECTS TO: /user/login
+200    24KB  http://10.10.11.26:3000/letmein/
+200    24KB  http://10.10.11.26:3000/letmein
+404    19B   http://10.10.11.26:3000/robots.txt
+200   297B   http://10.10.11.26:3000/sitemap.xml
+200    11KB  http://10.10.11.26:3000/user/login/
+404    19B   http://10.10.11.26:3000/v2/keys/?recursive=true
+401    50B   http://10.10.11.26:3000/v2/_catalog
+404    19B   http://10.10.11.26:3000/v2/api-docs
+401    50B   http://10.10.11.26:3000/v2
+401    50B   http://10.10.11.26:3000/v2/

