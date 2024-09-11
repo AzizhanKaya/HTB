@@ -10,22 +10,13 @@
             "cves": []
         },
         {   
-            "name": "Monitored",
-            "difficulty": "Medium",
-            "img": "https://labs.hackthebox.com/storage/avatars/d4988810825d26acb2e84ca0ac9feaf4.png",
+            "name": "FormulaX",
+            "difficulty": "Hard",
+            "img": "https://labs.hackthebox.com/storage/avatars/897faece9f60bf69d8e109833f63da48.png",
             "os": "linux",
-            "rate": "4.3",
-            "skills": ["SNMP enum", "SQL injection","Arbitrary file read"],
-            "cves": ["CVE-2023-40931"]
-        },
-        {
-            "name": "Hospital",
-            "difficulty": "Medium",
-            "img": "https://labs.hackthebox.com/storage/avatars/e980d18b909fa0ba8f519cf9777fd413.png",
-            "os": "windows",
             "rate": "4.6",
-            "skills": ["File Upload", "webApp", "Social Engineering"],
-            "cves": ["CVE-2023-35001","CVE-2023-36664"]
+            "skills": ["XSS", "Git"],
+            "cves": ["CVE-2022-24066"]
         },
         {
             "name": "Broker",
@@ -36,14 +27,23 @@
             "skills": ["Network Enumeration", "Vulnerability Assessment","Nginx Misconf"],
             "cves": ["CVE-2023-46606"]
         },
-        {   
-            "name": "Freelancer",
-            "difficulty": "Hard",
-            "img": "https://labs.hackthebox.com/storage/avatars/cc3c525e7837e7e95d0da9b6596e7a30.png",
+        {
+            "name": "Hospital",
+            "difficulty": "Medium",
+            "img": "https://labs.hackthebox.com/storage/avatars/e980d18b909fa0ba8f519cf9777fd413.png",
             "os": "windows",
+            "rate": "4.6",
+            "skills": ["File Upload", "webApp", "Social Engineering"],
+            "cves": ["CVE-2023-35001","CVE-2023-36664"]
+        },
+        {   
+            "name": "Monitored",
+            "difficulty": "Medium",
+            "img": "https://labs.hackthebox.com/storage/avatars/d4988810825d26acb2e84ca0ac9feaf4.png",
+            "os": "linux",
             "rate": "4.3",
-            "skills": ["SQL", "webApp"],
-            "cves": ["CVE-2024-33333"]
+            "skills": ["SNMP enum", "SQL injection","Arbitrary file read"],
+            "cves": ["CVE-2023-40931"]
         }
     ]
 }

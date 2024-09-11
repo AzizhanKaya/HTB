@@ -1,0 +1,6 @@
+# Dirsearch started Sat Aug 17 20:15:24 2024 as: /usr/lib/python3/dist-packages/dirsearch/dirsearch.py -u http://10.10.11.6/restricted/ -e html
+
+200    46B   http://10.10.11.6/restricted/about.html
+200    46B   http://10.10.11.6/restricted/chat.html
+200    46B   http://10.10.11.6/restricted/contact_us.html
+200    46B   http://10.10.11.6/restricted/home.html

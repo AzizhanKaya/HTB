@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CherryTree HTML</title>
+  <style>
+
+    *{
+      scrollbar-width: none;
+    }
+    body {
+      
+      background-color: #101010;
+      margin: 0;
+      padding: 0;
+      color: #ffffff;
+    }
+    
+    node {
+      color: -webkit-link;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    h1, h2 {
+      display: inline;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    #sidebar {
+    scrollbar-width: none;
+    float: left;
+    position: static;
+    display: inline;
+    width: 10vw;
+    height: auto;
+    background-color: #222;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: -10px 20px 15px 0px rgba(0, 0, 0, 0.492);
+    overflow-x: auto;
+    overflow-y: auto;
+    transition: width 0.5s ease, max-height 2s ease,background-color 0.5s ease;
+    z-index: 1;
+    zoom: 1.5;
+    }
+
+    #sidebar:hover {
+    width: 15vw;
+    background-color: #383838;
+    }
+
+    #nodes {
+      list-style-type: none;
+      padding-left: 10px;
+      margin-top: 5px;
+      margin-bottom: 8px;
+    }
+    
+    #divider {
+      width: 0.1vw;
+      height: 100vh;
+      background-color: #6b6b6b;
+      opacity: 0.5;
+      margin-right: 5px;
+      display: inline;
+      position: absolute;
+    }
+    #content {
+      top: 0;
+      bottom:0;
+      position: absolute;
+      display: inline;
+      padding: 20px;
+      overflow-y: scroll;
+      white-space: pre-wrap;
+      font-size: 1.5em;
+    }
+    #content *{
+        display: inline;
+    }
+    
+    .child-ul {
+      padding-left: 10px;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease;
+      list-style-type: none;
+    }
+    .node {
+      
+      padding: 7px;
+      border-radius: 10px;
+      margin-bottom: 5px;
+      position: relative;
+      border: 2px solid #4e4e4e;
+      white-space: nowrap;
+      overflow: hidden;
+      cursor: default;
+      width: auto;
+    }
+
+    .icon{
+      display: inline-block;
+      vertical-align: top;
+      width: 20px; 
+      height: 20px;
+    }
+
+    @media (max-width: 900px) {
+      #sidebar {
+        zoom: 1.2;
+        height: 2vh;
+        width: 2vw;
+        margin: 5px;
+      }
+      #nodes{
+        display: none;
+      }
+      #sidebar:hover{
+        width: 102vw;
+        height:auto;
+      }
+      #sidebar:hover #nodes {
+      display: block;
+      
+      }
+      #content {
+        zoom: 1;
+      }
+      .child-ul {
+      padding-left: 0px;      
+      }
+      .node{
+        margin-left: 0px;
+      }
+      #nodes{
+        padding-left: 0px;
+      }
+    }
+      
+    
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+  </div>
+
+  <div id="divider"></div>
+  <div id="content">
+  </div>
+</body>
+<script>
+
+
+const levels = [1, 2, 3, 2, 3, 2, 3, 2, 3];
+const names = ['Machine', 'Enum', 'Website', 'Xss', 'Chat history', 'Git', 'RCE', 'Privesc', 'Crack hashes'];
+const content =["<img src=img/0/image-0.png></img>\n\n<h1>Name: </h1><h1 style='color: #ef2929'>FormulaX</h1><h1>\nIp: </h1><h1 style='color: #3465a4'>10.10.11.248</h1><h1>\nDifficulty: </h1><h1 style='color: #f57900'>Hard</h1><h1>\nPrepared by: Azizhan Kaya</h1>", "Nmap\n<img src=img/1/image-0.png></img>\n\nPort 22 and 80 are open as usual.\nNothing intersting.\n<img src=img/1/image-1.png></img>\n\nLet's look at <node data-id=3>website</node> ", "\n\nIndex.html:\n\n<img src=img/2/image-0.png></img>\nJust a login page nothing else.\n\n\nChatbot:\n<img src=img/2/image-1.png></img>\nIt looks interesting, let's look at other pages \n\nContant form\n<img src=img/2/image-2.png></img>\nTesting for xss.\n\n<node data-id=4>xss</node>", "<img src=img/3/image-0.png></img>\n\nLet's listen for any connections. And 10.10.11.6 send a GET request.\n\n<img src=img/3/image-1.png></img>\n\nCreate another js file to bypass DOM. \n\n<img src=img/3/image-2.png></img>\n\nAnd we can steal chat history from the websocket.\n\n<img src=img/3/image-3.png></img>\n\n(Don't forget the set mode: no-cors) ", '<img src=img/4/image-0.png></img>\n\nHere is the chat history. \n\nWe can get m parameters from query with manually or\n\n<img src=img/4/image-1.png></img>\n\ngrep with bash and base64 decode it.\n\nA domain name stands out. Lets add our /etc/host file the domain. ', "<img src=img/5/image-0.png></img>\n\nAnd apparenly the new domain is a vhost for git repos.\n\n<img src=img/5/image-1.png></img>\n\nWe can look for what requests are made.\n\n\nthe request reveals which git version is in use ( 2.34.1 )\n\n<img src=img/5/image-2.png></img>\n\nAnd simple-git version is v3.14. Let's look for <node data-id=7>CVE and exploits.</node>\n", '\n<img src=img/6/image-0.png></img>\n\nand just <a href="https://security.snyk.io/vuln/SNYK-JS-SIMPLEGIT-3112221">found one</a>\n\n<img src=img/6/image-1.png></img>\n\nThis is our payload for reverse shell.\n\n<img src=img/6/image-2.png></img>\n\nDon\'t forget the listen.', "<img src=img/7/image-0.png></img>\n\nLet's look for files and hardcoded credentials. It looks like webserver is using mongodb.\n\n<img src=img/7/image-1.png></img>\n\nLet's dump the database.\n\n<img src=img/7/image-2.png></img>\n\nAnd deserialize the bson files. Now we have hashes let's try to <node data-id=9>crack</node> them.", "\n<img src=img/8/image-0.png></img>\n\nadmin and frank_dorky users are in list.\n\n<img src=img/8/image-1.png></img>\n\nThe hashing algorithm is bcrypt so set mode to 3200\n\n<img src=img/8/image-2.png></img>\n\nWe only got frank_dorky's password\n\nTo be continued... \n\n"];
+function generateHTML(levels, names) {
+    let html = '<ul id="nodes">';
+    let currentLevel = 1;
+
+    for (let i = 0; i < levels.length; i++) {
+        const level = levels[i];
+        const name = names[i];
+        const backgroundColor = `rgb(${51 + 17 * (level - 1)}, ${51 + 17 * (level - 1)}, ${51 + 17 * (level - 1)})`;
+
+        while (currentLevel < level) {
+            html += '<ul class="child-ul">';
+            currentLevel++;
+        }
+        while (currentLevel > level) {
+            html += '</ul>';
+            currentLevel--;
+        }
+        html += `<li class="node" style="background-color: ${backgroundColor};"><div class="icon">+</div><span>${name}</span>`;
+        if (i + 1 < levels.length && levels[i + 1] === level) {
+            html += '</li>';
+        }
+    }
+
+    while (currentLevel > 1) {
+        html += '</ul>';
+        currentLevel--;
+    }
+
+    html += '</div>';
+    return html;
+}
+
+const generatedHTML = generateHTML(levels, names);
+document.getElementById('sidebar').innerHTML = generatedHTML;
+
+
+var nodes = document.querySelectorAll(".node");
+
+Array.from(nodes).forEach((node, index) => {
+  addListener(node, index);
+});
+
+function addListener(node, id){
+  node.addEventListener("click", e => {
+    e.stopPropagation();
+    showContent(id);
+    render_links();
+  });
+}
+
+
+function render_links(){
+  var node_links = document.querySelectorAll("node");
+  Array.from(node_links).forEach(link => {
+    link.addEventListener("click", e => {
+          
+          var id = link.getAttribute("data-id"); 
+          showContent(id-1);
+      });
+  });
+}
+
+function showContent(id){
+
+  document.getElementById('content').innerHTML = content[id];
+
+}
+showContent(0);
+
+
+var icons = document.querySelectorAll(".icon");
+
+Array.from(icons).forEach(icon => {
+    icon.addEventListener("click",e =>{
+
+      e.stopPropagation();
+
+      toggleExpand(icon.parentNode)
+      toggleIcon(icon);
+    }
+  )
+}
+);
+
+function toggleIcon(icon) {
+  icon.textContent = icon.textContent === "+" ? "-" : "+";
+}
+
+
+function toggleExpand(node){
+
+    let childUl = node.querySelector(".child-ul")
+    
+    
+    if(childUl){
+
+      childUl.classList.toggle("expanded");
+      expand_collapse(childUl);
+
+
+    }
+    
+};
+
+function expand_collapse(childUl){
+
+
+  let parents = [];
+  let element = childUl;
+  while (element.id !== 'nodes') {
+    
+    if (element.classList.contains('child-ul')){
+      parents.push(element);
+    }
+    element = element.parentElement;
+  }
+
+  if(childUl.classList.contains("expanded")){
+  
+  
+  
+
+  let heightUl = 0;
+  parents.forEach(parentUl => {
+
+    heightUl += parentUl.scrollHeight;
+
+    parentUl.style.maxHeight = heightUl + "px";
+
+
+  })
+  
+  }
+  else{
+
+  let heightUl = parents[0].scrollHeight;
+  parents.forEach(parentUl => {
+
+    parentUl.style.maxHeight = (parentUl.scrollHeight-heightUl) + "px";
+
+  })
+  }
+}
+
+
+  </script>
+</body>
+
+</html>
